@@ -37,4 +37,13 @@
   }
 }
 
-/* Write your CSS here */
+.remove-all-button {
+  background-color: transparent;
+  outline: 0px;
+  color: #0b69ff;
+  font-weight: bold;
+  font-size: 20px;
+  border: none;
+  text-align: right;
+  cursor: pointer;
+}

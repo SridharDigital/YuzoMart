@@ -18,13 +18,73 @@ class App extends Component {
     cartList: [],
   }
 
-  //   TODO: Add your code for remove all cart items, increment cart item quantity, decrement cart item quantity, remove cart item
+  checkProductPresentInCart = (id) => {
+    const { cartList } = this.state
+    let isProductPresent = false
+    cartList.map((cartItem) => {
+      if (cartItem.id === id) {
+        isProductPresent = true
+      }
+    })
+    return isProductPresent
+  }
 
+  // eslint-disable-next-line no-dupe-class-members
   addCartItem = (product) => {
+    const isProductPresent = this.checkProductPresentInCart(product.id)
+    if (isProductPresent) {
+      this.setState((prevState) => ({
+        cartList: prevState.cartList.map((cartItem) => {
+          if (cartItem.id === product.id) {
+            return {
+              ...cartItem,
+              quantity: cartItem.quantity + product.quantity,
+            }
+          }
+          return cartItem
+        }),
+      }))
+    } else {
+      this.setState((prevState) => ({
+        cartList: [...prevState.cartList, product],
+      }))
+    }
+  }
+
+  incrementCartItemQuantity = (id) => {
     this.setState((prevState) => ({
-      cartList: [...prevState.cartList, product],
+      cartList: prevState.cartList.map((cartItem) => {
+        if (cartItem.id === id) {
+          return { ...cartItem, quantity: cartItem.quantity + 1 }
+        }
+        return cartItem
+      }),
     }))
-    //   TODO: Update the code here to implement addCartItem
+  }
+
+  decrementCartItemQuantity = (id, quantity) => {
+    this.setState((prevState) => ({
+      cartList: prevState.cartList.map((cartItem) => {
+        if (cartItem.id === id && quantity === 1) {
+          this.removeCartItem(id)
+        } else if (cartItem.id === id && quantity > 1) {
+          return { ...cartItem, quantity: cartItem.quantity - 1 }
+        }
+        return cartItem
+      }),
+    }))
+  }
+
+  removeCartItem = (id) => {
+    this.setState((prevState) => ({
+      cartList: prevState.cartList.filter((cartItem) => cartItem.id !== id),
+    }))
+  }
+
+  removeAllCartItems = () => {
+    this.setState((prevState) => ({
+      cartList: [],
+    }))
   }
 
   render() {
@@ -36,8 +96,12 @@ class App extends Component {
           cartList,
           addCartItem: this.addCartItem,
           removeCartItem: this.removeCartItem,
+          removeAllCartItems: this.removeAllCartItems,
+          incrementCartItemQuantity: this.incrementCartItemQuantity,
+          decrementCartItemQuantity: this.decrementCartItemQuantity,
         }}
       >
+        {console.log(cartList)}
         <Switch>
           <Route exact path="/login" component={LoginForm} />
           <Route exact path="/" component={Home} />

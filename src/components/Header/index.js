@@ -15,10 +15,10 @@ const Header = (props) => {
     history.replace("/login")
   }
 
-  const onClickLogin = () => {
-    const { history } = props
-    history.replace("/login")
-  }
+  // const onClickLogin = () => {
+  //   const { history } = props
+  //   history.replace("/login")
+  // }
 
   const renderCartItemsCount = () => (
     <CartContext.Consumer>

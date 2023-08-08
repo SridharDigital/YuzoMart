@@ -1,20 +1,31 @@
-import {BsPlusSquare, BsDashSquare} from 'react-icons/bs'
-import {AiFillCloseCircle} from 'react-icons/ai'
+import { BsPlusSquare, BsDashSquare } from "react-icons/bs"
+import { AiFillCloseCircle } from "react-icons/ai"
 
-import CartContext from '../../context/CartContext'
+import CartContext from "../../context/CartContext"
 
-import './index.css'
+import "./index.css"
 
-const CartItem = props => (
+const CartItem = (props) => (
   <CartContext.Consumer>
-    {value => {
-      const {removeCartItem} = value
-      const {cartItemDetails} = props
-      const {id, title, brand, quantity, price, imageUrl} = cartItemDetails
+    {(value) => {
+      const {
+        removeCartItem,
+        incrementCartItemQuantity,
+        decrementCartItemQuantity,
+      } = value
+      const { cartItemDetails } = props
+      const { id, title, brand, quantity, price, imageUrl } = cartItemDetails
       const onRemoveCartItem = () => {
         removeCartItem(id)
       }
-      // TODO: Update the functionality to increment and decrement quantity of the cart item
+
+      const onClickIncrementCartItem = () => {
+        incrementCartItemQuantity(id)
+      }
+
+      const onClickDecrementCartItem = () => {
+        decrementCartItemQuantity(id, quantity)
+      }
 
       return (
         <li className="cart-item">
@@ -25,11 +36,19 @@ const CartItem = props => (
               <p className="cart-product-brand">by {brand}</p>
             </div>
             <div className="cart-quantity-container">
-              <button type="button" className="quantity-controller-button">
+              <button
+                type="button"
+                className="quantity-controller-button"
+                onClick={onClickDecrementCartItem}
+              >
                 <BsDashSquare color="#52606D" size={12} />
               </button>
               <p className="cart-quantity">{quantity}</p>
-              <button type="button" className="quantity-controller-button">
+              <button
+                type="button"
+                className="quantity-controller-button"
+                onClick={onClickIncrementCartItem}
+              >
                 <BsPlusSquare color="#52606D" size={12} />
               </button>
             </div>
