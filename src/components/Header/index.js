@@ -1,19 +1,19 @@
-import { Link, withRouter } from "react-router-dom"
-import Cookies from "js-cookie"
-import { LuLogOut, LuLogIn } from "react-icons/lu"
+import { Link, withRouter } from "react-router-dom";
+import Cookies from "js-cookie";
+import { LuLogOut, LuLogIn } from "react-icons/lu";
 
-import CartContext from "../../context/CartContext"
-import Logo from "../../assets/YuzoMart.png"
+import CartContext from "../../context/CartContext";
+import Logo from "../../assets/YuzoMart.png";
 
-import "./index.css"
+import "./index.css";
 
 const Header = (props) => {
-  const isLogin = Cookies.get("jwt_token") !== undefined
+  const isLogin = Cookies.get("jwt_token") !== undefined;
   const onClickLogout = () => {
-    const { history } = props
-    Cookies.remove("jwt_token")
-    history.replace("/login")
-  }
+    const { history } = props;
+    Cookies.remove("jwt_token");
+    history.replace("/login");
+  };
 
   // const onClickLogin = () => {
   //   const { history } = props
@@ -23,8 +23,8 @@ const Header = (props) => {
   const renderCartItemsCount = () => (
     <CartContext.Consumer>
       {(value) => {
-        const { cartList } = value
-        const cartItemsCount = cartList.length
+        const { cartList } = value;
+        const cartItemsCount = cartList.length;
 
         return (
           <>
@@ -32,10 +32,10 @@ const Header = (props) => {
               <span className="cart-count-badge">{cartList.length}</span>
             ) : null}
           </>
-        )
+        );
       }}
     </CartContext.Consumer>
-  )
+  );
 
   return (
     <nav className="nav-header">
@@ -82,13 +82,13 @@ const Header = (props) => {
               </Link>
             </li>
           </ul>
-          <button
+          {/* <button
             type="button"
             className="logout-desktop-btn"
             onClick={onClickLogout}
           >
             {isLogin ? "Logout" : "Login"}
-          </button>
+          </button> */}
         </div>
       </div>
       <div className="nav-menu-mobile">
@@ -125,7 +125,7 @@ const Header = (props) => {
         </ul>
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default withRouter(Header)
+export default withRouter(Header);
